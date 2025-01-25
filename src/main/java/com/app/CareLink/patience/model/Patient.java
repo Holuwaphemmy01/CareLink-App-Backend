@@ -19,7 +19,7 @@ public class Patient {
     private String gender;
     private LocalDate birthDate;
     @Id
-    private Long patientId;
+    private String username;
     private String password;
 
 }

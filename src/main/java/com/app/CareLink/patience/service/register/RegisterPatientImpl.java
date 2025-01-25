@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.apache.logging.log4j.util.StringBuilders.equalsIgnoreCase;
 
 
 @Service
@@ -29,7 +33,12 @@ public class RegisterPatientImpl implements RegisterPatient {
         if(registerPatientRequest.getGender().isBlank()) throw new IllegalArgumentException("Gender cannot be blank");
         if(registerPatientRequest.getAddress().isBlank()) throw new IllegalArgumentException("Address cannot be blank");
         if(registerPatientRequest.getBirthDate().isAfter(LocalDate.now())) throw new IllegalArgumentException("Birth date cannot be in the future");
+        if(!registerPatientRequest.getGender().equalsIgnoreCase("male") || !registerPatientRequest.getGender().equalsIgnoreCase("female")) throw new IllegalArgumentException("Gender can be only male or female");
 
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9_-]{3,16}$");
+        Matcher matcher = pattern.matcher(registerPatientRequest.getFirstName());
+        registerPatientRequest.setFirstName(String.valueOf(matcher));
+//        ^[a-zA-Z0-9_-]+$
 
         Patient newPatient = mapRegisterPatienceRequest.mapRegisterPatientRequest(patient, registerPatientRequest);
 
