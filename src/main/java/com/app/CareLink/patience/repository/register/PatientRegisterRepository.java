@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PatienceRegisterRepository extends JpaRepository<Patient, String> {
+public interface PatientRegisterRepository extends JpaRepository<Patient, Long> {
 
+    Patient findByUsername(String username);
 }
